@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-const databaseFiles = fs.readdirSync('./databaseSystem').filter(file => file.endsWith('.js'));
+
 
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
@@ -13,9 +13,7 @@ for (const file of commandFiles) {
 	commands.push(command.data.toJSON());
 }
 
-for (const file of databaseFiles) {
-	const commandDatabase = require(`./databaseSystem/${file}`);
-}
+
 
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(token);
@@ -31,7 +29,7 @@ const rest = new REST({ version: '10' }).setToken(token);
 			{ body: commands },
 		);
 
-		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+		console.log(`Completed testing ${data.length} application (/) commands onto the database of the server`);
 	} catch (error) {
 		// And of course, make sure you catch and log any errors!
 		console.error(error);
